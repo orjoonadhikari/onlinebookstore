@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        working-directory: ./java-maven-sonar-argocd-helm-k8s/spring-boot-app
+        working-directory: .
         run: mvn clean package
 
       - name: Log in to Docker Hub
@@ -32,7 +32,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./java-maven-sonar-argocd-helm-k8s/spring-boot-app/
-          file: ./java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile
+          context: .
+          file: .Dockerfile
           push: true
           tags: arjunadhikari19/java:${{ github.run_number }}
