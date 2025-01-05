@@ -1,12 +1,15 @@
-# Use an OpenJDK image based on Alpine for a lightweight container
-FROM adoptopenjdk/openjdk11:alpine-jre
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:17-jdk-slim
 
-# Set the working directory inside the container
-WORKDIR /opt/app
+# Set the working directory in the container
+WORKDIR /app
 
-# Copy the .jar file from the build context to the container
-COPY target/*.jar /opt/app/app.jar
+# Copy the local JAR file into the container at /app
+COPY target/my-app.jar /app/my-app.jar
 
-# Set the default command to run the application
-ENTRYPOINT ["java", "-jar", "/opt/app/app.jar"]
+# Expose the port the app will run on
+EXPOSE 8080
+
+# Run the application
+CMD ["java", "-jar", "/app/my-app.jar"]
 
