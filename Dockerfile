@@ -1,11 +1,12 @@
-# You can change this base image to anything else
-# But make sure to use the correct version of Java
+# Use an OpenJDK image based on Alpine for a lightweight container
 FROM adoptopenjdk/openjdk11:alpine-jre
 
-
+# Set the working directory inside the container
 WORKDIR /opt/app
 
-COPY /target/*.jar /app/*.jar
+# Copy the .jar file from the build context to the container
+COPY target/*.jar /opt/app/app.jar
 
-# This should not be changed
-ENTRYPOINT ["java","-jar","/app*.jar"]
+# Set the default command to run the application
+ENTRYPOINT ["java", "-jar", "/opt/app/app.jar"]
+
