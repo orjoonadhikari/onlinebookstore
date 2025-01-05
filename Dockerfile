@@ -1,15 +1,16 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
 
-# Set the working directory in the container
-WORKDIR /app
+# You can change this base image to anything else
+# But make sure to use the correct version of Java
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-# Copy the local JAR file into the container at /app
-COPY target/my-app.jar /app/my-app.jar
+# Simply the artifact path
+ARG artifact=target/webapp-runner.jar
 
-# Expose the port the app will run on
-EXPOSE 8080
+WORKDIR /opt/app
 
-# Run the application
-CMD ["java", "-jar", "/app/my-app.jar"]
+COPY ${artifact} /app/webapp-runner.jar
+
+# This should not be changed
+ENTRYPOINT ["java","-jar","/app/webapp-runner.jar"]
+
 
