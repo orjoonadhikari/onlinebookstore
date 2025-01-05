@@ -1,18 +1,13 @@
-# Use an official OpenJDK runtime as the base image
+# Start with a lightweight Java runtime
 FROM openjdk:8-jdk-slim
 
-# Set the working directory inside the container
-WORKDIR /app
+# Copy necessary files (Tomcat runner and app) into the container
+COPY target/dependency/webapp-runner.jar /app/
+COPY target/onlinebookstore.war /app/
 
-# Copy the built WAR file and the webapp-runner.jar to the container
-# Assuming Maven has been run locally to generate these artifacts
-COPY target/onlinebookstore.war /app/onlinebookstore.war
-COPY target/dependency/webapp-runner.jar /app/webapp-runner.jar
-
-# Expose the default Tomcat HTTP port
+# Open port 8080 for the app
 EXPOSE 8080
 
-# Command to run the application
-CMD ["java", "-jar", "webapp-runner.jar", "--port", "8080", "onlinebookstore.war"]
-
+# Start the app using Java
+CMD ["java", "-jar", "/app/webapp-runner.jar", "--port", "8080", "/app/onlinebookstore.war"]
 
