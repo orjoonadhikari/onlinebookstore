@@ -1,13 +1,13 @@
-# Start with a lightweight Java runtime
-FROM openjdk:8-jdk-slim
+# You can change this base image to anything else
+# But make sure to use the correct version of Java
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-# Copy necessary files (Tomcat runner and app) into the container
-COPY target/dependency/webapp-runner.jar /app/
-COPY target/onlinebookstore.war /app/
+# Simply the artifact path
+ARG artifact=target/onlinebookstore.jar
 
-# Open port 8080 for the app
-EXPOSE 8080
+WORKDIR /opt/app
 
-# Start the app using Java
-CMD ["java", "-jar", "/app/webapp-runner.jar", "--port", "8080", "/app/onlinebookstore.war"]
+COPY ${artifact} app.jar
 
+# This should not be changed
+ENTRYPOINT ["java","-jar","onlinebookstore.jar"]
