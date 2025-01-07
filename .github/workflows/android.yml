@@ -1,6 +1,6 @@
 name: Build and Push Docker Image
 
-run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+run-name: Deploy too ${{ inputs.deploy_target }} by @${{ github.actor }}
 
 on:
   push:
