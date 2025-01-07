@@ -1,13 +1,16 @@
-# You can change this base image to anything else
-# But make sure to use the correct version of Java
-FROM adoptopenjdk/openjdk11:alpine-jre
+# Use an official OpenJDK runtime as the base image
+FROM openjdk:8-jdk-slim
 
-# Simply the artifact path
-ARG artifact=target/onlinebookstore.jar
+# Set the working directory inside the container
+WORKDIR /app
 
-WORKDIR /opt/app
+# Copy the built WAR file and the webapp-runner.jar to the container
+# Assuming Maven has been run locally to generate these artifacts
+COPY target/onlinebookstore.war /app/onlinebookstore.war
+COPY target/dependency/webapp-runner.jar /app/webapp-runner.jar
 
-COPY ${artifact} app.jar
+# Expose the default Tomcat HTTP port
+EXPOSE 8080
 
-# This should not be changed
-ENTRYPOINT ["java","-jar","onlinebookstore.jar"]
+# Command to run the application
+CMD ["java", "-jar", "webapp-runner.jar", "--port", "8080", "onlinebookstore.war"]
