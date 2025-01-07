@@ -2,23 +2,11 @@ name: Build and Push Docker Image
 
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 
-#on:
- # push:
- #   branches:
-#.      - masters
 on:
-  workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
+  push:
+    branches:
+      - master
+
 
 jobs:
   build:
